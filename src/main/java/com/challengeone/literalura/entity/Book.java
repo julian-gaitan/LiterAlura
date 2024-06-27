@@ -30,7 +30,7 @@ public class Book {
     }
     public String toStringFormated() {
         return "Title:\t\t" + title + "\n" +
-                "Author:\t\t" + (author != null ? author.toStringFormated() : "N/A") + "\n" +
+                "Author:\t\t" + (author != null ? author.toResumedString() : "N/A") + "\n" +
                 "Language:\t" + languages + "\n" +
                 "Copyright:\t" + copyright + "\n" +
                 "Media:\t\t" + media_type + "\n" +

@@ -4,6 +4,7 @@ import com.challengeone.literalura.model.API_Author;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "authors")
@@ -25,6 +26,13 @@ public class Author {
     }
 
     public String toStringFormated() {
+        return "Name:\t" + name + "\n" +
+                "Born:\t" + birthYear + "\n" +
+                "Died:\t" + deathYear + "\n" +
+                "Books:\t" + books.stream().map(Book::getTitle).collect(Collectors.joining(" | "));
+    }
+
+    public String toResumedString() {
         return name + (birthYear != null && deathYear != null ? " (" + birthYear + "-" + deathYear + ")" : "");
     }
 

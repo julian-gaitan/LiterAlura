@@ -1,7 +1,7 @@
 package com.challengeone.literalura;
 
 import com.challengeone.literalura.main.CommandMain;
-import com.challengeone.literalura.service.BookService;
+import com.challengeone.literalura.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LiterAluraApplication implements CommandLineRunner {
 
 	@Autowired
-	private BookService bookService;
+	private DatabaseService databaseService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(LiterAluraApplication.class, args);
@@ -19,6 +19,6 @@ public class LiterAluraApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		CommandMain.begin(bookService);
+		CommandMain.begin(databaseService);
 	}
 }

@@ -1,9 +1,10 @@
 package com.challengeone.literalura.main;
 
+import com.challengeone.literalura.entity.Author;
 import com.challengeone.literalura.entity.Book;
 import com.challengeone.literalura.model.API_Search;
 import com.challengeone.literalura.service.API_Helper;
-import com.challengeone.literalura.service.BookService;
+import com.challengeone.literalura.service.DatabaseService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,14 +14,14 @@ import java.util.function.Function;
 
 public class CommandMain {
 
-    private static BookService bookService;
+    private static DatabaseService databaseService;
 
     private static final Scanner input = new Scanner(System.in);
     private static String next;
     private static int option;
 
-    public static void begin(BookService bookService) {
-        CommandMain.bookService = bookService;
+    public static void begin(DatabaseService databaseService) {
+        CommandMain.databaseService = databaseService;
         intro();
         start();
     }
@@ -45,6 +46,9 @@ public class CommandMain {
                 break;
             case 2:
                 listBooks();
+                break;
+            case 3:
+                listAuthors();
                 break;
         }
     }
@@ -86,8 +90,8 @@ public class CommandMain {
                 );
                 if (option == 1) {
                     Book book = Book.GenerateFromRecord(search.results().get(selection - 1));
-                    if (bookService.findBookById(book.getId()).isEmpty()) {
-                        bookService.saveBook(book);
+                    if (databaseService.findBookById(book.getId()).isEmpty()) {
+                        databaseService.saveBook(book);
                         System.out.println("Book SAVED in the Database...");
                     } else {
                         System.out.println("!!! THIS BOOK IS ALREADY IN THE DATABASE ¡¡¡");
@@ -108,10 +112,20 @@ public class CommandMain {
     }
 
     private static void listBooks() {
-        List<Book> books = bookService.findAllBooks();
+        List<Book> books = databaseService.findAllBooks();
         books.forEach(b -> {
             System.out.println("---------- BOOK ----------");
             System.out.println(b.toStringFormated());
+            System.out.println();
+        });
+        start();
+    }
+
+    private static void listAuthors() {
+        List<Author> authors = databaseService.findAllAuthors();
+        authors.forEach(a -> {
+            System.out.println("---------- AUTHOR ----------");
+            System.out.println(a.toStringFormated());
             System.out.println();
         });
         start();
