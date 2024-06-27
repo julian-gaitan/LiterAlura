@@ -11,8 +11,14 @@ import java.net.http.HttpResponse;
 
 public class API_Helper {
 
+    private static final String BASE_ENDPOINT = "https://gutendex.com/books/?";
+
+    private static String formatString(String txt) {
+        return txt.replace(" ","%20");
+    }
+
     public static String request(String endpoint) {
-        URI url = URI.create(endpoint);
+        URI url = URI.create(BASE_ENDPOINT + formatString(endpoint));
 //        System.out.println(url);
 
         HttpClient client = HttpClient.newHttpClient();

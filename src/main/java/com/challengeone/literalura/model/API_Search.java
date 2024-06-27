@@ -5,7 +5,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record API_Search(
-    Integer count,
-    List<API_Book> results
+        Integer count,
+        List<API_Book> results
 ) {
 }
