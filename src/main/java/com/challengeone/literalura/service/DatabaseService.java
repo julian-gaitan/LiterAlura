@@ -30,7 +30,11 @@ public class DatabaseService {
         return bookRepository.findAll();
     }
 
-    public  List<Author> findAllAuthors() {
+    public List<Author> findAllAuthors() {
         return authorRepository.findAll();
+    }
+
+    public List<Author> findAuthorsAliveForThatYear(Integer year) {
+        return authorRepository.findByBirthYearLessThanEqualAndDeathYearGreaterThanEqual(year, year);
     }
 }

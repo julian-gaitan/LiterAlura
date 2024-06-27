@@ -37,7 +37,8 @@ public class CommandMain {
                 Arrays.asList(
                         "Search for a book (download Info to the Database)",
                         "List ALL the books in the Database",
-                        "List ALL the authors in the Database"
+                        "List ALL the authors in the Database",
+                        "List living authors for that year"
                 ),"¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
         );
         switch (option) {
@@ -49,6 +50,9 @@ public class CommandMain {
                 break;
             case 3:
                 listAuthors();
+                break;
+            case 4:
+                listLivingAuthorsFor();
                 break;
         }
     }
@@ -86,7 +90,7 @@ public class CommandMain {
                         Arrays.asList(
                                 "Confirm",
                                 "Cancel"
-                        ),"¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
+                        ),"¡¡¡ TYPE 1 TO CONFIRM OR 2 TO CANCEL !!!"
                 );
                 if (option == 1) {
                     Book book = Book.GenerateFromRecord(search.results().get(selection - 1));
@@ -113,21 +117,56 @@ public class CommandMain {
 
     private static void listBooks() {
         List<Book> books = databaseService.findAllBooks();
-        books.forEach(b -> {
-            System.out.println("---------- BOOK ----------");
-            System.out.println(b.toStringFormated());
-            System.out.println();
-        });
+        if (!books.isEmpty()) {
+            books.forEach(b -> {
+                System.out.println("---------- BOOK ----------");
+                System.out.println(b.toStringFormated());
+                System.out.println();
+            });
+        } else {
+            System.out.println("¡ No Books Yet !");
+        }
         start();
     }
 
     private static void listAuthors() {
         List<Author> authors = databaseService.findAllAuthors();
-        authors.forEach(a -> {
-            System.out.println("---------- AUTHOR ----------");
-            System.out.println(a.toStringFormated());
-            System.out.println();
-        });
+        if (!authors.isEmpty()) {
+            authors.forEach(a -> {
+                System.out.println("---------- AUTHOR ----------");
+                System.out.println(a.toStringFormated());
+                System.out.println();
+            });
+        } else {
+            System.out.println("¡ No Authors Yet !");
+        }
+        start();
+    }
+
+    private static void listLivingAuthorsFor() {
+        typeWithCondition("Type the Year (negative numbers for B.C.)",
+                (text) -> {
+                    try {
+                        int number = Integer.parseInt(text);
+                        if (number > -10000 && number <= 3000) {
+                            return true;
+                        }
+                    }
+                    catch (NumberFormatException ignored) {
+                    }
+                    return false;
+                },
+                "¡¡¡ MUST BE A VALID YEAR !!!");
+        List<Author> authors = databaseService.findAuthorsAliveForThatYear(Integer.parseInt(next));
+        if (!authors.isEmpty()) {
+            authors.forEach(a -> {
+                System.out.println("---------- AUTHOR ----------");
+                System.out.println(a.toStringFormated());
+                System.out.println();
+            });
+        } else {
+            System.out.println("¡ No Authors were found for the year " + next + " !");
+        }
         start();
     }
 
