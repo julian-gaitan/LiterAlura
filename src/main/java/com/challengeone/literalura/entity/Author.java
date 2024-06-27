@@ -24,6 +24,10 @@ public class Author {
         return author;
     }
 
+    public String toStringFormated() {
+        return name + (birthYear != null && deathYear != null ? " (" + birthYear + "-" + deathYear + ")" : "");
+    }
+
     public Author() {
     }
 

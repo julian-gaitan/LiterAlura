@@ -35,7 +35,8 @@ public class CommandMain {
         showOptions("Select:",
                 Arrays.asList(
                         "Search for a book (download Info to the Database)",
-                        "List the books in the Database"
+                        "List ALL the books in the Database",
+                        "List ALL the authors in the Database"
                 ),"¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
         );
         switch (option) {
@@ -43,6 +44,7 @@ public class CommandMain {
                 typeBook();
                 break;
             case 2:
+                listBooks();
                 break;
         }
     }
@@ -59,7 +61,7 @@ public class CommandMain {
                 AtomicInteger counter = new AtomicInteger();
                 search.results().stream().limit(10).forEach(b -> {
                     System.out.println("---------- BOOK Nº " + counter.incrementAndGet() + " ----------");
-                    System.out.println(b.toStringConsole());
+                    System.out.println(b.toStringFormated());
                     System.out.println();
                 });
                 typeWithCondition("Please type NUMBER of the book you want:",
@@ -76,7 +78,7 @@ public class CommandMain {
                         },
                         "¡¡¡ MUST BE A NUMBER BETWEEN 1 AND " + search.results().size() + " !!!");
                 int selection = Integer.parseInt(next);
-                showOptions("You selected:\n" + search.results().get(selection - 1).toStringConsole() + "\n",
+                showOptions("You selected:\n" + search.results().get(selection - 1).toStringFormated() + "\n",
                         Arrays.asList(
                                 "Confirm",
                                 "Cancel"
@@ -103,6 +105,16 @@ public class CommandMain {
             System.out.println("An error occurred while searching for the book, please try again");
             start();
         }
+    }
+
+    private static void listBooks() {
+        List<Book> books = bookService.findAllBooks();
+        books.forEach(b -> {
+            System.out.println("---------- BOOK ----------");
+            System.out.println(b.toStringFormated());
+            System.out.println();
+        });
+        start();
     }
 
     private static void showOptions(String titleMessage, List<String> options, String errorMessage) {

@@ -28,6 +28,14 @@ public class Book {
         book.download_count = record.download_count();
         return book;
     }
+    public String toStringFormated() {
+        return "Title:\t\t" + title + "\n" +
+                "Author:\t\t" + (author != null ? author.toStringFormated() : "N/A") + "\n" +
+                "Language:\t" + languages + "\n" +
+                "Copyright:\t" + copyright + "\n" +
+                "Media:\t\t" + media_type + "\n" +
+                "Downloads:\t" + download_count;
+    }
 
     public Book() {
     }

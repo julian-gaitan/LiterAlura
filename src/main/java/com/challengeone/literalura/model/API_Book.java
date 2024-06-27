@@ -14,7 +14,7 @@ public record API_Book(
         String media_type,
         Integer download_count
 ) {
-    public String toStringConsole() {
+    public String toStringFormated() {
         return "Title:\t\t" + title + "\n" +
                 "Author:\t\t" + (!authors.isEmpty() ? authors().get(0).toStringFormated() : "N/A") + "\n" +
                 "Language:\t" + languages + "\n" +
