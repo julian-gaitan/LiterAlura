@@ -10,7 +10,8 @@ public class Book {
     @Id
     private Long id;
     private String title;
-//    private List<API_Author> authors;
+    @ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+    private Author author;
     private String languages;
     private Boolean copyright;
     private String media_type;
@@ -20,6 +21,7 @@ public class Book {
         Book book = new Book();
         book.id = record.id();
         book.title = record.title();
+        book.author = !record.authors().isEmpty() ? Author.GenerateFromRecord(record.authors().get(0)) : null;
         book.languages = record.languages().toString();
         book.copyright = record.copyright();
         book.media_type = record.media_type();
@@ -45,6 +47,14 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getLanguages() {
