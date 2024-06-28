@@ -6,9 +6,7 @@ import com.challengeone.literalura.model.API_Search;
 import com.challengeone.literalura.service.API_Helper;
 import com.challengeone.literalura.service.DatabaseService;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 
@@ -38,7 +36,8 @@ public class CommandMain {
                         "Search for a book (download Info to the Database)",
                         "List ALL the books in the Database",
                         "List ALL the authors in the Database",
-                        "List living authors for that year"
+                        "List living authors for that year",
+                        "List books by Language"
                 ),"¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
         );
         switch (option) {
@@ -53,6 +52,9 @@ public class CommandMain {
                 break;
             case 4:
                 listLivingAuthorsFor();
+                break;
+            case 5:
+                listBooksByLanguage();
                 break;
         }
     }
@@ -125,6 +127,25 @@ public class CommandMain {
             });
         } else {
             System.out.println("¡ No Books Yet !");
+        }
+        start();
+    }
+
+    private static void listBooksByLanguage() {
+        List<String> languages = new ArrayList<>(databaseService.findAllLanguages());
+        if (!languages.isEmpty()) {
+            showOptions("Select the Language",
+                    languages,
+                    "¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
+            );
+            List<Book> books = databaseService.findBooksByLanguage(languages.get(option - 1));
+            books.forEach(b -> {
+                System.out.println("---------- BOOK ----------");
+                System.out.println(b.toStringFormated());
+                System.out.println();
+            });
+        } else {
+            System.out.println("¡ No Languages Yet !");
         }
         start();
     }

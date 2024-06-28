@@ -9,6 +9,6 @@ public record API_Author(
         Integer death_year
 ) {
     public String toStringFormated() {
-        return name + (birth_year != null && death_year != null ? " (" + birth_year + "-" + death_year + ")" : "");
+        return name + (birth_year != null && death_year != null ? " (" + birth_year + " ‒ " + death_year + ")" : "");
     }
 }

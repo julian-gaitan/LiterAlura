@@ -33,7 +33,7 @@ public class Author {
     }
 
     public String toResumedString() {
-        return name + (birthYear != null && deathYear != null ? " (" + birthYear + "-" + deathYear + ")" : "");
+        return name + (birthYear != null && deathYear != null ? " (" + birthYear + " ‒ " + deathYear + ")" : "");
     }
 
     public Author() {
