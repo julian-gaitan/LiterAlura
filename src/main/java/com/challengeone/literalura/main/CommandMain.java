@@ -37,7 +37,8 @@ public class CommandMain {
                         "List ALL the books in the Database",
                         "List ALL the authors in the Database",
                         "List living authors for that year",
-                        "List books by Language"
+                        "List books by Language",
+                        "Exit"
                 ),"¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
         );
         switch (option) {
@@ -55,6 +56,8 @@ public class CommandMain {
                 break;
             case 5:
                 listBooksByLanguage();
+                break;
+            case 6:
                 break;
         }
     }
@@ -131,25 +134,6 @@ public class CommandMain {
         start();
     }
 
-    private static void listBooksByLanguage() {
-        List<String> languages = new ArrayList<>(databaseService.findAllLanguages());
-        if (!languages.isEmpty()) {
-            showOptions("Select the Language",
-                    languages,
-                    "¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
-            );
-            List<Book> books = databaseService.findBooksByLanguage(languages.get(option - 1));
-            books.forEach(b -> {
-                System.out.println("---------- BOOK ----------");
-                System.out.println(b.toStringFormated());
-                System.out.println();
-            });
-        } else {
-            System.out.println("¡ No Languages Yet !");
-        }
-        start();
-    }
-
     private static void listAuthors() {
         List<Author> authors = databaseService.findAllAuthors();
         if (!authors.isEmpty()) {
@@ -187,6 +171,26 @@ public class CommandMain {
             });
         } else {
             System.out.println("¡ No Authors were found for the year " + next + " !");
+        }
+        start();
+    }
+
+    private static void listBooksByLanguage() {
+        List<String> languages = new ArrayList<>(databaseService.findAllLanguages());
+        if (!languages.isEmpty()) {
+            showOptions("Select the Language",
+                    languages,
+                    "¡¡¡ SELECT ONE OF THE FOLLOWING OPTIONS !!!"
+            );
+            List<Book> books = databaseService.findBooksByLanguage(languages.get(option - 1));
+            books.forEach(b -> {
+                System.out.println("---------- BOOK ----------");
+                System.out.println(b.toStringFormated());
+                System.out.println();
+            });
+            System.out.println("---------- TOTAL : " + books.size() + " ----------");
+        } else {
+            System.out.println("¡ No Languages Yet !");
         }
         start();
     }
